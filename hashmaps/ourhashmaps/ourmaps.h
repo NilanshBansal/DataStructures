@@ -19,7 +19,7 @@ class MapNode{
 };
 
 
-template <typename V>
+template <typename V> 
 class ourmap{
     public:
         int count;
@@ -45,16 +45,44 @@ class ourmap{
          int size(){
             return count;
         }
+        private:
+            int getBucketIndex(string key){
+                //imlementing string abc --->    int (a * p^2 + b * p^1 + c * p^0) where p is a prime no eg 37
+                int hashCode = 0;
+                int currentCoef = 1; //since p^0 = 1
 
-        void insert(string key, V value){
+                for(int i=key.length()-1;i>=0;i--){
+                    hashCode+=key[i]*currentCoef;
+                    hashCode = hashCode%numBuckets; //to prevent the value to get out of range for integer.
+                    currentCoef*=37;
+                    currentCoef=currentCoef%numBuckets; //to prevent the value to get out of range for integer. since (x*y*z)%d = ((x%d)*(y%d)*(z%d))%d 
+                }
+                return hashCode%numBuckets;
+            }
+        public: 
+            void insert(string key, V value){
+                int bucketIndex = getBucketIndex(string key);
 
-        }
+                Mapnode<V>* head = buckets[bucketIndex];
+                while(head!=NULL){
+                    if(head->key == key){
+                        head->value = value;
+                        return;
+                    }
+                    head=head->next;
+                }
+                head = buckets[bucketIndex];
+                Mapnode<V>* node = new MapNode<V>(key,value);
+                node->next=NULL;
+                buckets[bucketIndex] = node;
+                count++;
+            }
 
-        V getValue(string key){
+            V getValue(string key){
+
+            }
             
-        }
-        
-        V remove(string key){
+            V remove(string key){
 
-        }
+            }
 };
