@@ -49,7 +49,7 @@ if(root==NULL)
     return false;
     
     int rightMin=minimum(root->right);
-    if(rightMin<root->data)
+    if(rightMin<=root->data)
     return false;
     
   bool leftAns=isBST(root->left);
