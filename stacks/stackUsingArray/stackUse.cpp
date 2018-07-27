@@ -3,7 +3,7 @@ using namespace std;
 #include "stackUsingArray.cpp"
 
 int main(){
-    StackUsingArray s(4);
+    StackUsingArray s;
     s.push(10);    
     s.push(20);    
     s.push(30);    
