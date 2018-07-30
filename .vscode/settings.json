@@ -14,6 +14,7 @@
         "tuple": "cpp",
         "vector": "cpp",
         "climits": "cpp",
-        "iterator": "cpp"
+        "iterator": "cpp",
+        "string": "cpp"
     }
 }
