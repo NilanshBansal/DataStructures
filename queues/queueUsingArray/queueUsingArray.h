@@ -10,9 +10,9 @@ class QueueUsingArray{
     int capacity;
 
     public: 
-        QueueUsingArray(int s){
-            data = new T[s];
-            capacity = s;
+        QueueUsingArray(){
+            data = new T[4];
+            capacity = 4;
             frontIndex = -1;
             nextIndex = 0;
             size = 0;
@@ -28,8 +28,21 @@ class QueueUsingArray{
 
         void enqueue(T element){
             if(size == capacity){
-                cout<<"Queue Full!"<<endl;
-                return ;
+                T* newdata = new T[2*capacity];
+                int j = 0;
+                for(int i=frontIndex;i<capacity;i++){
+                    newdata[j] = data[i];
+                    j++;
+                }
+                for(int i =0;i<frontIndex;i++){
+                    newdata[j] = data[i];
+                    j++;
+                }
+                delete [] data;
+                data = newdata;
+                frontIndex = 0;
+                nextIndex = capacity;
+                capacity *= 2;
             }
             data[nextIndex] = element;
             nextIndex = (nextIndex + 1)%capacity;
