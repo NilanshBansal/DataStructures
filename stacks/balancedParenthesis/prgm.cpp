@@ -11,6 +11,9 @@ bool checkParenthesis(string input){
             s.push(input[i]);
         }
         else if(input[i] == '}' || input[i] == ')' || input[i] == ']'){
+            if(s.empty()){
+                return false;
+            }
             temp = s.top();
             if((temp == '{' && input[i] == '}') || (temp == '(' && input[i] == ')') || (temp == '[' && input[i] == ']')){
                 s.pop();
