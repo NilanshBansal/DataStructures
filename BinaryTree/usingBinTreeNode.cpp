@@ -1,5 +1,6 @@
 #include<iostream>
 #include "BinaryTreeNode.h"
+#include<queue>
 using namespace std;
 template <typename T>
 void printTree(BinaryTreeNode<T>* root){
@@ -37,6 +38,44 @@ BinaryTreeNode<int>* takeInput(){
     return root;
 }
 
+BinaryTreeNode<int>* takeInputLevelWise(){
+    int rootData;
+    
+    cout<<"Enter root data";
+    cin>>rootData;
+    if(rootData == -1){
+        return NULL;
+    }
+    BinaryTreeNode<int>* root = new BinaryTreeNode<int>(rootData);
+    queue<BinaryTreeNode<int>*> pendingNodes;
+
+    pendingNodes.push(root);
+    
+    while(!pendingNodes.empty()){
+        BinaryTreeNode<int>* front = pendingNodes.front();
+        pendingNodes.pop();
+        int leftData;
+        int rightData;
+        
+        cout<<"Enter left child of "<<front->data<<endl;
+        cin>>leftData;
+
+        if(leftData!=-1){
+            BinaryTreeNode<int>* leftChild = new BinaryTreeNode<int>(leftData);
+            front->left = leftChild;
+            pendingNodes.push(leftChild);
+        }
+        cout<<"Enter right child of "<<front->data<<endl;
+        cin>>rightData;
+
+        if(rightData!=-1){
+            BinaryTreeNode<int>* rightChild = new BinaryTreeNode<int>(rightData);
+            front->right = rightChild;
+            pendingNodes.push(rightChild);
+        }
+    }
+    return root;
+}
 
 int main(){
     // BinaryTreeNode<int>* rootNode = new BinaryTreeNode<int>(1);
@@ -45,7 +84,7 @@ int main(){
 
     // rootNode->left = leftNode;
     // rootNode->right = rightNode;
-    BinaryTreeNode<int>* rootNode = takeInput();
+    BinaryTreeNode<int>* rootNode = takeInputLevelWise();
 
     printTree(rootNode);
     delete rootNode;
