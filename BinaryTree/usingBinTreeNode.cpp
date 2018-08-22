@@ -35,7 +35,7 @@ void printTreeLevelWise(BinaryTreeNode<int>* root){
             pendingNodes.push(front->left);
         }
         if(front->right!=NULL){
-            cout<<" L "<<front->right->data;
+            cout<<" R "<<front->right->data;
             pendingNodes.push(front->right);
         }
         cout<<endl;
@@ -194,6 +194,51 @@ BinaryTreeNode<int>* buildTreeInPostHelper(int* in,int* post,int inS,int inE,int
 BinaryTreeNode<int>* buildTreeInPost(int* in,int* post,int size){
     return buildTreeInPostHelper(in,post,0,size-1,0,size-1);
 }
+int height(BinaryTreeNode<int>* root){
+    if(root == NULL){
+        return  0;
+    }
+    return 1 + max(height(root->left),height(root->right));
+}
+
+int diameter(BinaryTreeNode<int>* root){
+    if(root == NULL){
+        return  0;
+    }
+
+    int option1 = height(root->left) + height(root->right);
+    int option2 = diameter(root->left);
+    int option3 = diameter(root->right);
+
+    return max (option1,max(option2,option3));
+
+}
+
+pair<int,int> heightdiameterOptimised(BinaryTreeNode<int>* root){
+    if(root == NULL){
+        pair<int,int> p;
+        p.first = 0;
+        p.second = 0;
+        return p;
+    }
+
+    pair<int,int>leftAns = heightdiameterOptimised(root->left);
+    pair<int,int>rightAns = heightdiameterOptimised(root->right);
+
+    int ld = leftAns.second;
+    int lh = leftAns.first;
+    int rd = rightAns.second;
+    int rh = rightAns.first;
+
+    int height = 1 + max(lh,rh);
+    int diameter = max(lh + rh,max(ld,rd));
+
+    pair<int,int> p;
+    p.first = height;
+    p.second = diameter;
+
+    return p;
+}
 
 int main(){
     // 1 2 3 4 5 6 7 -1 -1 -1 -1 8 9 -1 -1 -1 -1 -1 -1
@@ -212,11 +257,17 @@ int main(){
     inorder(rootNode);
     delete rootNode; */
 
-    int in[] = {4,2,5,1,8,6,9,3,7};
-    int post[] = {4,5,2,8,9,6,7,3,1};
-    int pre[] = {1,2,4,5,3,6,8,9,7};
-    BinaryTreeNode<int>* root = buildTreeInPre(in,pre,9);
+    // int in[] = {4,2,5,1,8,6,9,3,7};
+    // int post[] = {4,5,2,8,9,6,7,3,1};
+    // int pre[] = {1,2,4,5,3,6,8,9,7};
+    // BinaryTreeNode<int>* root = buildTreeInPre(in,pre,9);
+
+    BinaryTreeNode<int>* root = takeInputLevelWise();
     printTreeLevelWise(root);
+    cout<<endl;
+    pair<int,int> p = heightdiameterOptimised(root);
+    cout<<"Height: "<<p.first<<endl;
+    cout<<"Diameter: "<<p.second<<endl;
     delete root;
     return 0;
 }
