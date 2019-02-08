@@ -11,6 +11,7 @@ int decToBin(int n,int output[]){
 int main(){
 
 int n,output[100];
+cout<<"\nEnter Decimal no: ";
 cin>>n;
 int len=decToBin(n,output);
 //reversing output array
@@ -23,9 +24,11 @@ while(start<end){
     start++;
     end--;
 }
+cout<<"\nBinary no: ";
 for(int i=0;i<len;i++){
     cout<<output[i]<<" ";
 }
+cout<<endl;
 
     return 0;
 }
