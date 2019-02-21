@@ -5,29 +5,39 @@
 using namespace std;
 
 int main(){
-    vector<string>tillnow(17576);
     
-    int numdigits = 3;
-    int curindex = 0;
-    int divide_factor = 26;
+    char start = 'a';
+    char end = 'b';
+    int numdigits = 6;
+
+
+    int total_outcomes = 1;
+    int unique_alphabets = (end-start) + 1;
 
     for(int i=0;i<numdigits;i++){
-        for (char alpha='a';alpha<='z';alpha++){
-            for(int i=0;i<17576/divide_factor;i++){
+        total_outcomes *= unique_alphabets;
+    }
+
+    vector<string>tillnow(total_outcomes);
+    int curindex = 0;
+    int divide_factor = unique_alphabets;
+
+    for(int i=0;i<numdigits;i++){
+        for (char alpha=start;alpha<=end;alpha++){
+            for(int i=0;i<total_outcomes/divide_factor;i++){
                 tillnow[curindex].push_back(alpha);
                 curindex++;
             }
-            if(curindex == 17576){
+            if(curindex == total_outcomes){
                 break;
             }
-            if(alpha=='z' && curindex!=17576) {
-                alpha='a' - 1;
+            if(alpha==end && curindex!=total_outcomes) {
+                alpha=start - 1;
             }
         }
         curindex = 0;
-        divide_factor *= 26;
+        divide_factor *= unique_alphabets;
     }
-    
     
     
     //Printing Vector
@@ -39,10 +49,9 @@ int main(){
 
     //Writing to a File
     ofstream myfile;
-    myfile.open("3_digit_comb_loop.txt");
+    myfile.open(to_string(numdigits) + "_digit" + "_unique_" + to_string(unique_alphabets) + ".txt");
 
     for(int i=0;i<tillnow.size();i++){
-        // cout<<tillnow[i]<<endl;
         myfile <<tillnow[i];
         myfile<<"\n";
     }
