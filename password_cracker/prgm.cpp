@@ -5,9 +5,10 @@
 using namespace std;
 
 int main(){
-    
+    clock_t tStart = clock();
+
     char start = 'a';
-    char end = 'b';
+    char end = 'z';
     int numdigits = 6;
 
 
@@ -42,20 +43,21 @@ int main(){
     
     //Printing Vector
 
-    for(int i=0;i<tillnow.size();i++){
-        cout<<tillnow[i]<<endl;
-    }
+    // for(int i=0;i<tillnow.size();i++){
+    //     cout<<tillnow[i]<<endl;
+    // }
 
 
     //Writing to a File
     ofstream myfile;
-    myfile.open(to_string(numdigits) + "_digit" + "_unique_" + to_string(unique_alphabets) + ".txt");
+    myfile.open(to_string(numdigits) + "_digit" + "_unique_" + start + "_to_"  + end + ".txt");
 
     for(int i=0;i<tillnow.size();i++){
         myfile <<tillnow[i];
         myfile<<"\n";
     }
 
+    cout<<"\nTime taken: "<<(double)(clock() - tStart)/CLOCKS_PER_SEC<<" seconds"<<<endl;
 
     return 0;
 }
